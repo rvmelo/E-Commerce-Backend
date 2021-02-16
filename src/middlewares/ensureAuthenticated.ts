@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
+import AppError from '../errors/appError';
 
 import authConfig from '../config/auth';
 
@@ -17,11 +18,10 @@ export default function (
   const authHeaders = req.headers.authorization;
 
   if (!authHeaders) {
-    throw new Error('JWT is missing');
+    throw new AppError('JWT is missing', 401);
   }
 
-  // const token = authHeaders?.split(' ')[1];
-  const [, token] = authHeaders?.split(' ');
+  const token = authHeaders?.split(' ')[1];
 
   try {
     const decoded = verify(token, authConfig.jwt.secret);
@@ -31,6 +31,6 @@ export default function (
 
     return next();
   } catch {
-    throw new Error('Invalid JWT token');
+    throw new AppError('Invalid JWT token', 401);
   }
 }

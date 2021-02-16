@@ -2,6 +2,7 @@ import { getRepository } from 'typeorm';
 import { hash } from 'bcrypt';
 import { classToClass } from 'class-transformer';
 import Customer from '../models/Customer';
+import AppError from '../errors/appError';
 
 interface Request {
   name: string;
@@ -18,7 +19,7 @@ class CreateCustomerService {
     });
 
     if (checkCustomerExists) {
-      throw new Error('Customer already exists');
+      throw new AppError('Customer already exists');
     }
 
     const hashedPassword = await hash(password, 8);

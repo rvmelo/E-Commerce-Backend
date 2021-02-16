@@ -1,4 +1,3 @@
-// src/routes/index.ts
 import { Router } from 'express';
 import customersRouter from './customers.routes';
 import sessionsRouter from './sessions.routes';

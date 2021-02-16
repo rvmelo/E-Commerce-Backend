@@ -6,19 +6,15 @@ const customersRouter = Router();
 customersRouter.post('/', async (req, res) => {
   const createCustomerService = new CreateCustomerService();
 
-  try {
-    const { name, email, password } = req.body;
+  const { name, email, password } = req.body;
 
-    const customer = await createCustomerService.execute({
-      name,
-      email,
-      password,
-    });
+  const customer = await createCustomerService.execute({
+    name,
+    email,
+    password,
+  });
 
-    return res.status(201).json(customer);
-  } catch (err) {
-    return res.status(400).send({ error: err.message });
-  }
+  return res.status(201).json(customer);
 });
 
 export default customersRouter;

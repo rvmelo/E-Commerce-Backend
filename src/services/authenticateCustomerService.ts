@@ -3,6 +3,7 @@ import { sign } from 'jsonwebtoken';
 import { getRepository } from 'typeorm';
 import Customer from '../models/Customer';
 import authConfig from '../config/auth';
+import AppError from '../errors/appError';
 
 interface Request {
   email: string;
@@ -21,7 +22,7 @@ class AuthenticateCustomerService {
     const customer = await customerRepository.findOne({ where: { email } });
 
     if (!customer) {
-      throw new Error(' wrong user/password combinations');
+      throw new AppError(' wrong user/password combinations');
     }
 
     const passwordMatched = await compare(password, customer.password);
@@ -34,7 +35,7 @@ class AuthenticateCustomerService {
     });
 
     if (!passwordMatched) {
-      throw new Error(' wrong user/password combination');
+      throw new AppError(' wrong user/password combination');
     }
 
     return { customer, token };
