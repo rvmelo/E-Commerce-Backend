@@ -7,12 +7,12 @@ const ordersRouter = Router();
 ordersRouter.use(ensureAuthenticated);
 
 ordersRouter.post('/', async (req, res) => {
-  const { customer_id, order_products } = req.body;
+  const { order_products } = req.body;
 
   const createOrderService = new CreateOrderService();
 
   const order = await createOrderService.execute({
-    customer_id,
+    customer_id: req.customer.id,
     order_products,
   });
 

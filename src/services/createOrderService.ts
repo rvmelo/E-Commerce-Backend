@@ -31,10 +31,6 @@ class CreateOrderService {
       where: { id: customer_id },
     });
 
-    if (!customer) {
-      throw new AppError('customer does not exist');
-    }
-
     const productIds = order_products.map(orderProduct => ({
       id: orderProduct.product_id,
     }));
@@ -56,7 +52,7 @@ class CreateOrderService {
       }),
     );
 
-    const order = await ordersRepository.create({
+    const order = ordersRepository.create({
       customer_id,
       customer,
       order_products: formattedOrderProducts,

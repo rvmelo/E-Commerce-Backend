@@ -24,7 +24,7 @@ class CreateCustomerService {
 
     const hashedPassword = await hash(password, 8);
 
-    const customer = await customerRepository.create({
+    const customer = customerRepository.create({
       name,
       email,
       password: hashedPassword,
