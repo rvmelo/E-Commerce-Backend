@@ -33,6 +33,9 @@ class Transaction {
   country: string;
 
   @Column()
+  value: number;
+
+  @Column()
   customer_id: string;
 
   @ManyToOne(() => Customer, { eager: true })

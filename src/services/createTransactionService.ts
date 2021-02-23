@@ -33,6 +33,11 @@ class CreateTransactionService {
       throw new AppError('Order not found for authenticated customer');
     }
 
+    const value = order.order_products.reduce((totalValue, orderProduct) => {
+      totalValue += orderProduct.quantity * orderProduct.price;
+      return totalValue;
+    }, 0);
+
     const createdTransaction = transactionsRepository.create({
       card_number,
       cvc,
@@ -41,6 +46,7 @@ class CreateTransactionService {
       country,
       customer_id,
       order_id,
+      value,
     });
 
     const savedTransaction = await transactionsRepository.save(
