@@ -4,6 +4,12 @@ module.exports = {
   "entities": [
     "./dist/models/*.js"
   ],
+  "ssl": true,
+  "extra": {
+    "ssl": {
+      "rejectUnauthorized": false
+    }
+  },
   "migrations": [
     "./dist/database/migrations/*.js"
   ],
